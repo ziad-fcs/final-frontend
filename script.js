@@ -4,7 +4,7 @@ const deletebtn = document.getElementById("delete-task");
 const task = document.getElementById("task")
 const taskPre = document.querySelector(".tasks-view");
 const error = document.getElementById("error");
-const allTasks = document
+const allTasks = document.querySelectorAll(".task");
 
 const themeToggle = document.getElementById("theme-toggle");
 
