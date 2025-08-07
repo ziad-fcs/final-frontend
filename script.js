@@ -9,6 +9,9 @@ const selectAllBtn = document.getElementById("select-all");
 
 const themeToggle = document.getElementById("theme-toggle");
 
+updateSelectAllButton();
+addCheckboxListeners();
+
 function addTask(){
     let taskText = task.value;
     if (taskText.trim() ==="")
@@ -30,7 +33,8 @@ function addTask(){
     taskPre.appendChild(tasks_div);
     task.value ="";
         }
-
+updateSelectAllButton();
+addCheckboxListeners();
 }
 
 function editTask() {
@@ -98,14 +102,34 @@ themeToggle.addEventListener("click", () => {
 
 function selectALL(){
 const allCheckboxes = document.querySelectorAll(".task input[type='checkbox']");
-  const allSelected = Array.from(allCheckboxes).every(cb => cb.checked);
-  allCheckboxes.forEach(cb => cb.checked = !allSelected);
-};
+const allSelected = Array.from(allCheckboxes).every(cb => cb.checked);
+allCheckboxes.forEach(cb => cb.checked = !allSelected);
 
+updateSelectAllButton();
+
+};
+function updateSelectAllButton() {
+    const allCheckboxes = document.querySelectorAll(".task input[type='checkbox']");
+    const selectAllBtn = document.getElementById("select-all");
+
+    if (allCheckboxes.length === 0) {
+        selectAllBtn.textContent = "Select All";
+        selectAllBtn.disabled = true;
+        return;
+    }
+    const allSelected = Array.from(allCheckboxes).every(cb => cb.checked);
+    selectAllBtn.textContent = allSelected ? "Unselect All" : "Select All";
+    selectAllBtn.disabled = false;
+}
+function addCheckboxListeners() {
+    const allCheckboxes = document.querySelectorAll(".task input[type='checkbox']");
+    allCheckboxes.forEach(cb => {
+        cb.removeEventListener('change', updateSelectAllButton); // prevent duplicate
+        cb.addEventListener('change', updateSelectAllButton);
+    });
+}
 
 selectAllBtn.addEventListener("click", selectALL);
-  
-
 addbtn.addEventListener("click", addTask);
 editbtn.addEventListener("click", editTask);
 deletebtn.addEventListener("click", deleteTask);
