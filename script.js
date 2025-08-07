@@ -5,6 +5,7 @@ const task = document.getElementById("task")
 const taskPre = document.querySelector(".tasks-view");
 const error = document.getElementById("error");
 const allTasks = document.querySelectorAll(".task");
+const selectAllBtn = document.getElementById("select-all");
 
 const themeToggle = document.getElementById("theme-toggle");
 
@@ -67,8 +68,6 @@ function editTask() {
     }
 }
 
-
-
 function deleteTask() {
     const allTasks = document.querySelectorAll(".task");
     let found = false;
@@ -87,6 +86,7 @@ function deleteTask() {
         error.textContent = "Please select at least one task to delete!";
     }
 }
+
 themeToggle.addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
     if (document.body.classList.contains("dark-mode")) {
@@ -95,6 +95,16 @@ themeToggle.addEventListener("click", () => {
         themeToggle.textContent = "🌙 Dark Mode";
     }
 });
+
+function selectALL(){
+const allCheckboxes = document.querySelectorAll(".task input[type='checkbox']");
+  const allSelected = Array.from(allCheckboxes).every(cb => cb.checked);
+  allCheckboxes.forEach(cb => cb.checked = !allSelected);
+};
+
+
+selectAllBtn.addEventListener("click", selectALL);
+  
 
 addbtn.addEventListener("click", addTask);
 editbtn.addEventListener("click", editTask);
